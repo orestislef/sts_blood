@@ -4,12 +4,288 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Εγγραφή Δοτών Αίματος</title>
-    <link rel="stylesheet" href="style.css">
-	<link rel="icon" type="image/x-icon" href="favicon.ico">
-	
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+            transform: translateY(0);
+            transition: all 0.3s ease;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            box-shadow: 0 10px 20px rgba(238, 90, 82, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo::before {
+            content: '🩸';
+            font-size: 48px;
+            animation: pulse 2s infinite;
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.2) 50%, transparent 70%);
+            transform: translateX(-100%);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e0e6ed;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+            position: relative;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+        input:valid {
+            border-color: #28a745;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+
+        .submit-btn:active {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .thank-you-message {
+            display: none;
+            text-align: center;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .thank-you-message h2 {
+            color: #28a745;
+            font-size: 32px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .thank-you-message p {
+            color: #555;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .thank-you-message p:last-child {
+            font-style: italic;
+            color: #666;
+            border-left: 4px solid #28a745;
+            padding-left: 20px;
+            margin-top: 25px;
+            text-align: left;
+        }
+
+        .success-icon {
+            font-size: 64px;
+            color: #28a745;
+            margin-bottom: 20px;
+            animation: bounceIn 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+                margin: 10px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            input, .submit-btn {
+                font-size: 16px;
+            }
+        }
+
+        /* Loading state */
+        .loading {
+            position: relative;
+            pointer-events: none;
+        }
+
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s infinite linear;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+    
     <script>
         async function registerUser(event) {
             event.preventDefault();
+
+            const submitBtn = document.querySelector('.submit-btn');
+            const originalText = submitBtn.textContent;
+            
+            // Add loading state
+            submitBtn.classList.add('loading');
+            submitBtn.textContent = 'Επεξεργασία...';
 
             const fullName = document.getElementById('fullName').value;
             const telephoneNumber = document.getElementById('telephoneNumber').value;
@@ -44,19 +320,37 @@
                     document.querySelector('form').style.display = 'none';
                     document.querySelector('.thank-you-message').style.display = 'block';
                 } else {
-                    alert('Υπήρξε πρόβλημα με την εγγραφή σας. Παρακαλώ δοκιμάστε ξανά.');
+                    throw new Error('Server error');
                 }
             } catch (error) {
                 console.error('Error:', error);
                 alert('Υπήρξε πρόβλημα με την εγγραφή σας. Παρακαλώ δοκιμάστε ξανά.');
+                
+                // Reset button state
+                submitBtn.classList.remove('loading');
+                submitBtn.textContent = originalText;
             }
         }
+
+        // Add input animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = document.querySelectorAll('input');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.classList.add('focused');
+                });
+                
+                input.addEventListener('blur', function() {
+                    this.parentElement.classList.remove('focused');
+                });
+            });
+        });
     </script>
 </head>
 <body>
 
 <div class="container">
-    <img src="logo.png" alt="Logo" style="width: 200px; display: block; margin: 0 auto 20px auto;">
+    <div class="logo"></div>
     <h1>Εγγραφή Δοτών Αίματος</h1>
     <form onsubmit="registerUser(event)">
         <div class="input-group">
@@ -74,7 +368,9 @@
         <button type="submit" class="submit-btn">Εγγραφή</button>
     </form>
     <div class="thank-you-message">
-        <p>Ευχαριστούμε για την εγγραφή σας!</p>
+        <div class="success-icon">✅</div>
+        <h2>Ευχαριστούμε!</h2>
+        <p>Η εγγραφή σας ολοκληρώθηκε επιτυχώς!</p>
         <p>Θα επικοινωνήσουμε μαζί σας σύντομα.</p>
         <p>Η εγγραφή σας ως δότης αίματος είναι μια πολύτιμη πράξη ανθρωπιάς και προσφοράς. Συμβάλλετε στη σωτηρία ζωών και στη στήριξη της κοινότητάς μας.</p>
     </div>
