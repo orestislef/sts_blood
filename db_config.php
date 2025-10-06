@@ -1,6 +1,7 @@
+
 <?php
 $servername = "localhost";
-$username = "phpmyadmin";
+$username = "root";
 $password = "orestislef"; 
 $dbname = "bloodGivers";
 ?>
