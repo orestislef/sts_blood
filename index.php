@@ -67,11 +67,10 @@ $conn->close();
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 40px 20px;
             color: var(--text-primary);
             transition: background-color 0.3s ease;
             position: relative;
-            overflow: hidden;
         }
 
         body::before {
